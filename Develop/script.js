@@ -9,15 +9,15 @@
 $("#currentDay").text(moment().format('MMMM Do YYYY, [Make it a Good Day!]'));
 console.log(moment) 
 
-
+var saveBtn = document.querySelector("#saveBtn")
 var currentHour = moment().hour();
 console.log("currenthour= "+ currentHour);
 
 var scheduleHours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
 console.log("schduledhour= "+ scheduleHours);
 
-                //created hour text and submit col blocks
-                //gave the hours col block definition 
+        //created hour text and submit col blocks
+        //gave the hours col block definition 
 function letsSchedule() {
 
     for (let i = 0; i < scheduleHours.length; i++ ) {
@@ -37,7 +37,7 @@ function letsSchedule() {
     
         colHour.append(hours);
 
-                //created text col block
+        //created text col block
         var colTextDiv = $("<div class='col-sm-8'>");
         
         var colText = $("<textarea>");
@@ -46,82 +46,102 @@ function letsSchedule() {
     
         //if condition to check that the time is past present future
         //change the bkgnd accordingly
-        updateSchedHours();
+        // tried as LOCAL
+        updateSchedHours(); 
         function updateSchedHours() {
-            var currentHour = moment().format();
+            var currentHour = moment().format(hours);
             for(var i = 0; i < scheduleHours.length; i++ ) {
 
-                if (parseInt(scheduleHours[i]) > currentHour) {
-                    $('#' + scheduleHours[i]).attr("style", "background-color: red");
+                if (parseInt(scheduleHours[i]) > currentHour) { //future
+                    $('.future' + scheduleHours[i]).attr("style", "background-color: #77dd77");
 
                 }
-                else if (parseInt(scheduleHours[i]) < currentHour) {
-                    $('#' + scheduleHours[i]).attr("style", "background-color: lightgray");
+                else if (parseInt(scheduleHours[i]) < currentHour) { //past
+                    $('.past' + scheduleHours[i]).attr("style", "background-color: #d3d3d3");
 
                 }
 
-                else if (parseInt(scheduleHours[i]) == currentHour) {
-                    $('#' + scheduleHours[i]).attr("style", "background-color: gray");
+                else if (parseInt(scheduleHours[i]) == currentHour) { //present
+                    $('.present' + scheduleHours[i]).attr("style", "background-color: #ff6961");
                 }
             }
         }    
 
 
         //col 3 
-        //create submit button
+        //create save button and set to local storage
         //add font awesome icon to btn
-
         colSaveBtnDiv = $("<div class='col-sm-2'>");
         
         var colSaveButton = $("<button>");
         colSaveButton.attr("id", hours);
         colSaveButton.addClass("saveBtn");
 
-                // append the div
+        // append the div
         colTextDiv.append(colText);
         colSaveBtnDiv.append(colSaveButton);
-
 
         $("#scheduler").append(row);
         row.append(colHour, colTextDiv, colSaveBtnDiv);        
     } 
+
+        saveBtn.addEventListener("click", function (save) {
+            save.preventDefalt();
+
+            var textarea = document.querySelector("textarea").value;
+
+            if (textarea === "") {
+                displayMessage("error", "text area cannot be blank");
+
+                localStorage.setItem("textarea", textarea);
+            }
+        });
 }
 
         //if condition to check that the time is past present future
         //change the bkgnd accordingly
+        
+        // updateSchedHours();
+        // function updateSchedHours() {
+        //     var currentHour = moment().format(hours);
+        //     for(var i = 0; i < scheduleHours.length; i++ ) {
 
-// updateSchedHours();
+        //         if (parseInt(scheduleHours[i]) > currentHour) { //future
+        //             $('.future' + scheduleHours[i]).attr("style", "background-color: #77dd77");
 
-// function updateSchedHours() {
-//     var currentHour = moment().format('H');
-//     for(var i = 0; i < scheduleHours.length; i++ ) {
+        //         }
+        //         else if (parseInt(scheduleHours[i]) < currentHour) { //past
+        //             $('.past' + scheduleHours[i]).attr("style", "background-color: #d3d3d3");
 
-//         if (parseInt(scheduleHours[i]) > currentHour) {
-//             $('#' + scheduleHours[i]).attr("style", "background-color: red");
+        //         }
 
-
-//         }
-//         else if (parseInt(scheduleHours[i]) < currentHour) {
-//             $('#' + scheduleHours[i]).attr("style", "background-color: lightgray");
-
-//         }
-
-//         else if (parseInt(scheduleHours[i]) == currentHour) {
-//             $('#' + scheduleHours[i]).attr("style", "background-color: gray");
-//         }
-//     }
-// }
+        //         else if (parseInt(scheduleHours[i]) == currentHour) { //present
+        //             $('.present' + scheduleHours[i]).attr("style", "background-color: #ff6961");
+        //         }
+        //     }
+        // }
 
 letsSchedule();
 
+//tried as GLOBAL
+//if condition to check that the time is past present future
+//change the bkgnd accordingly
+// updateSchedHours(); 
+//         function updateSchedHours() {
+//             var currentHour = moment().format('hours');
+//             for(var i = 0; i < scheduleHours.length; i++ ) {
 
+//                 if (parseInt(scheduleHours[i]) > currentHour) { //future
+//                     $('.future' + scheduleHours[i]).attr("style", "background-color: #77dd77");
 
-// colSubmitBtnDiv = $("<div class='col-sm-2'>");
-        
-        // var colSubmitButton = $("<button>");
-        // colSubmitButton.attr("id", hours);
-        // colSubmitButton.addClass("saveBtn");
+//                 }
+//                 else if (parseInt(scheduleHours[i]) < currentHour) { //past
+//                     $('.past' + scheduleHours[i]).attr("style", "background-color: #d3d3d3");
 
-        //         // append the div
-        // colTextDiv.append(colText);
-        // colSubmitBtnDiv.append(colSubmitButton);
+//                 }
+
+//                 else if (parseInt(scheduleHours[i]) == currentHour) { //present
+//                     $('.present' + scheduleHours[i]).attr("style", "background-color: #ff6961");
+//                 }
+//             }
+//         }
