@@ -16,8 +16,8 @@ console.log("currenthour= "+ currentHour);
 var scheduleHours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
 console.log("schduledhour= "+ scheduleHours);
 
-//created hour text and submit col blocks
-//gave the hours col block definition 
+                //created hour text and submit col blocks
+                //gave the hours col block definition 
 function letsSchedule() {
 
     for (let i = 0; i < scheduleHours.length; i++ ) {
@@ -37,36 +37,91 @@ function letsSchedule() {
     
         colHour.append(hours);
 
-        //created text col block
+                //created text col block
         var colTextDiv = $("<div class='col-sm-8'>");
         
         var colText = $("<textarea>");
         colText.attr("id", "textarea" + i);
         colText.addClass("form-control");
+    
+        //if condition to check that the time is past present future
+        //change the bkgnd accordingly
+        updateSchedHours();
+        function updateSchedHours() {
+            var currentHour = moment().format();
+            for(var i = 0; i < scheduleHours.length; i++ ) {
 
-        //if condition to check that the time is past
-        //present
-        //future
-        // change the bkgnd accordingly
+                if (parseInt(scheduleHours[i]) > currentHour) {
+                    $('#' + scheduleHours[i]).attr("style", "background-color: red");
 
-        //col3 
+                }
+                else if (parseInt(scheduleHours[i]) < currentHour) {
+                    $('#' + scheduleHours[i]).attr("style", "background-color: lightgray");
+
+                }
+
+                else if (parseInt(scheduleHours[i]) == currentHour) {
+                    $('#' + scheduleHours[i]).attr("style", "background-color: gray");
+                }
+            }
+        }    
+
+
+        //col 3 
         //create submit button
-        colSubmitBtnDiv = $("<div class='col-sm-2'>");
-        
-        var colSubmitButton = $("<button>");
-        colSubmitButton.attr("id", hours);
-        colSubmitButton.addClass("saveBtn");
+        //add font awesome icon to btn
 
-        // append the div
+        colSaveBtnDiv = $("<div class='col-sm-2'>");
+        
+        var colSaveButton = $("<button>");
+        colSaveButton.attr("id", hours);
+        colSaveButton.addClass("saveBtn");
+
+                // append the div
         colTextDiv.append(colText);
-        colSubmitBtnDiv.append(colSubmitButton);
+        colSaveBtnDiv.append(colSaveButton);
 
 
         $("#scheduler").append(row);
-        row.append(colHour, colTextDiv, colSubmitBtnDiv);        
+        row.append(colHour, colTextDiv, colSaveBtnDiv);        
     } 
-
-
 }
 
+        //if condition to check that the time is past present future
+        //change the bkgnd accordingly
+
+// updateSchedHours();
+
+// function updateSchedHours() {
+//     var currentHour = moment().format('H');
+//     for(var i = 0; i < scheduleHours.length; i++ ) {
+
+//         if (parseInt(scheduleHours[i]) > currentHour) {
+//             $('#' + scheduleHours[i]).attr("style", "background-color: red");
+
+
+//         }
+//         else if (parseInt(scheduleHours[i]) < currentHour) {
+//             $('#' + scheduleHours[i]).attr("style", "background-color: lightgray");
+
+//         }
+
+//         else if (parseInt(scheduleHours[i]) == currentHour) {
+//             $('#' + scheduleHours[i]).attr("style", "background-color: gray");
+//         }
+//     }
+// }
+
 letsSchedule();
+
+
+
+// colSubmitBtnDiv = $("<div class='col-sm-2'>");
+        
+        // var colSubmitButton = $("<button>");
+        // colSubmitButton.attr("id", hours);
+        // colSubmitButton.addClass("saveBtn");
+
+        //         // append the div
+        // colTextDiv.append(colText);
+        // colSubmitBtnDiv.append(colSubmitButton);
