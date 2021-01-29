@@ -10,6 +10,7 @@ $("#currentDay").text(moment().format('MMMM Do YYYY, [Make it a Good Day!]'));
 console.log(moment) 
 
 var saveBtn = document.querySelector("#saveBtn")
+console.log(saveBtn)
 var currentHour = moment().hour();
 console.log("currenthour= "+ currentHour);
 
@@ -74,7 +75,7 @@ function letsSchedule() {
         colSaveBtnDiv = $("<div class='col-sm-2'>");
         
         var colSaveButton = $("<button>");
-        colSaveButton.attr("id", hours);
+        colSaveButton.attr("id", currentHour);
         colSaveButton.addClass("saveBtn");
 
         // append the div
