@@ -1,148 +1,80 @@
-
-//1 display current day 
-
-//2 create past present or future indicated by color code
-//3 enter an event into the text area
-//4 save event and store in local storage
-// upon page refresh, safe event persists
-
-$("#currentDay").text(moment().format('MMMM Do YYYY, [Make it a Good Day!]'));
-console.log(moment) 
-
-var saveBtn = document.querySelector("#saveBtn")
-console.log(saveBtn)
-var currentHour = moment().hour();
-console.log("currenthour= "+ currentHour);
-
+var saveBtn = document.querySelector("#saveBtn");
+//console.log(saveBtn);
+var currentHour = moment().format("LT");
+//console.log("currenthour= " + currentHour);
+var hour = moment().hour();
 var scheduleHours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
-console.log("schduledhour= "+ scheduleHours);
+//console.log("schduledhour= " + scheduleHours);
 
-        //created hour text and submit col blocks
-        //gave the hours col block definition 
+$("#currentDay").text(moment().format("MMMM Do YYYY, [Make it a Good Day!]"));
+//console.log(moment);
+
+$("#currentHour").text(currentHour);
+//=====coverts time block from A.M. designation to P.M. designation using currentHour=====
 function letsSchedule() {
+  for (let i = 0; i < scheduleHours.length; i++) {
+    var row = $("<div class='row'>");
+    var colHour = $("<div class='col-sm-2'>");
 
-    for (let i = 0; i < scheduleHours.length; i++ ) {
-        
-        var row = $("<div class='row'>");
-        var colHour = $("<div class='col-sm-2'>");
-        
-        var hours = scheduleHours[i] + " a.m.";
+    var hours = scheduleHours[i] + " a.m.";
 
-        if( scheduleHours[i] >= 12) {
-            hours = scheduleHours[i] + " p.m.";
+    if (scheduleHours[i] >= 12) {
+      hours = scheduleHours[i] + " p.m.";
 
-            if(scheduleHours[i] >= 13) {
-                hours = scheduleHours[i] - 12  + " p.m.";
-            }
-        }
-    
-        colHour.append(hours);
+      if (scheduleHours[i] >= 13) {
+        hours = scheduleHours[i] - 12 + " p.m.";
+      }
+    }
 
-        //created text col block
-        var colTextDiv = $("<div class='col-sm-8'>");
-        
-        var colText = $("<textarea>");
-        colText.attr("id", "textarea" + i);
-        colText.addClass("form-control");
-    
-        //if condition to check that the time is past present future
-        //change the bkgnd accordingly
-        // tried as LOCAL
-        updateSchedHours(); 
-        function updateSchedHours() {
-            var currentHour = moment().format(hours);
-            for(var i = 0; i < scheduleHours.length; i++ ) {
+    colHour.append(hours);
 
-                if (parseInt(scheduleHours[i]) > currentHour) { //future
-                    $('.future' + scheduleHours[i]).attr("style", "background-color: #77dd77");
+    //=====created text col block=====
+    var colTextDiv = $("<div class='col-sm-8'>");
 
-                }
-                else if (parseInt(scheduleHours[i]) < currentHour) { //past
-                    $('.past' + scheduleHours[i]).attr("style", "background-color: #d3d3d3");
+    var colText = $("<textarea>");
+    colText.attr("id", "textarea" + i);
+    colText.addClass("form-control");
 
-                }
+    //=====if condition to check if "hour" is past present future, calling style for color=====
 
-                else if (parseInt(scheduleHours[i]) == currentHour) { //present
-                    $('.present' + scheduleHours[i]).attr("style", "background-color: #ff6961");
-                }
-            }
-        }    
+    if (hour === scheduleHours[i]) {
+        colText.addClass("present");
+    }
+
+    if (hour > scheduleHours[i]) {
+        colText.addClass("past");
+    }
+
+    if (hour < scheduleHours[i]) {
+        colText.addClass("future");
+    }
 
 
-        //col 3 
-        //create save button and set to local storage
-        //add font awesome icon to btn
-        colSaveBtnDiv = $("<div class='col-sm-2'>");
-        
-        var colSaveButton = $("<button>");
-        colSaveButton.attr("id", currentHour);
-        colSaveButton.addClass("saveBtn");
+    //=====create save button and set to local storage=====
+    //add font awesome icon to btn
+    var valueTextarea = localStorage.getItem("textarea" + i);
+    colText.text(valueTextarea);
 
-        // append the div
-        colTextDiv.append(colText);
-        colSaveBtnDiv.append(colSaveButton);
+    var colSaveButton = $("<button>");
+    colSaveButton.addClass("saveBtn");
+    colSaveButton.text("SAVE");
 
-        $("#scheduler").append(row);
-        row.append(colHour, colTextDiv, colSaveBtnDiv);        
-    } 
+    var colSaveBtnDiv = $("<div class='col-sm-2'>");
 
-        saveBtn.addEventListener("click", function (save) {
-            save.preventDefalt();
+    colTextDiv.append(colText);
+    colSaveBtnDiv.append(colSaveButton);
 
-            var textarea = document.querySelector("textarea").value;
-
-            if (textarea === "") {
-                displayMessage("error", "text area cannot be blank");
-
-                localStorage.setItem("textarea", textarea);
-            }
-        });
+    row.append(colHour, colTextDiv, colSaveBtnDiv);
+    $("#scheduler").append(row);
+  }
+    //=====added eventListener to save input from user=====
+  $(".saveBtn").on("click", function () {
+    for (let i = 0; i < scheduleHours.length; i++) {
+      var valueTextarea = $("#textarea" + i).val();
+      console.log("textarea= " + valueTextarea + i);
+      localStorage.setItem("textarea" + i, valueTextarea);
+    }
+  });
 }
 
-        //if condition to check that the time is past present future
-        //change the bkgnd accordingly
-        
-        // updateSchedHours();
-        // function updateSchedHours() {
-        //     var currentHour = moment().format(hours);
-        //     for(var i = 0; i < scheduleHours.length; i++ ) {
-
-        //         if (parseInt(scheduleHours[i]) > currentHour) { //future
-        //             $('.future' + scheduleHours[i]).attr("style", "background-color: #77dd77");
-
-        //         }
-        //         else if (parseInt(scheduleHours[i]) < currentHour) { //past
-        //             $('.past' + scheduleHours[i]).attr("style", "background-color: #d3d3d3");
-
-        //         }
-
-        //         else if (parseInt(scheduleHours[i]) == currentHour) { //present
-        //             $('.present' + scheduleHours[i]).attr("style", "background-color: #ff6961");
-        //         }
-        //     }
-        // }
-
 letsSchedule();
-
-//tried as GLOBAL
-//if condition to check that the time is past present future
-//change the bkgnd accordingly
-// updateSchedHours(); 
-//         function updateSchedHours() {
-//             var currentHour = moment().format('hours');
-//             for(var i = 0; i < scheduleHours.length; i++ ) {
-
-//                 if (parseInt(scheduleHours[i]) > currentHour) { //future
-//                     $('.future' + scheduleHours[i]).attr("style", "background-color: #77dd77");
-
-//                 }
-//                 else if (parseInt(scheduleHours[i]) < currentHour) { //past
-//                     $('.past' + scheduleHours[i]).attr("style", "background-color: #d3d3d3");
-
-//                 }
-
-//                 else if (parseInt(scheduleHours[i]) == currentHour) { //present
-//                     $('.present' + scheduleHours[i]).attr("style", "background-color: #ff6961");
-//                 }
-//             }
-//         }

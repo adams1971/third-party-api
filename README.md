@@ -2,8 +2,18 @@
 
 Simple Day Calendar
 
-This is a simple day book type calendar app when completed will log input to local storage from the user. It will also highlight the work day hour of business as past, present and future. 
+a daily planner developed using JavaScript, BootStrap (CSS) and Jquery
 
-I choose to write this app dynamically, however, this has proved to be very challenging. 
+Create a simple calendar application that allows a user to save events for each hour of the work day.This project started with starter code with instructions to modify. This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery.
 
-This app is not completed! 
+One requirement was to use [Moment.js](https://momentjs.com/) or an alternative date/time API. I choose to use Moment even though it is soon to be discontinued.
+
+The user is able to enter events in the input col and save those events in local storage. 
+
+
+Lnaquages / Technoligies:
+HTML
+CSS
+JavaScript
+Moment.js
+Bootstrap
