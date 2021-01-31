@@ -1,6 +1,6 @@
 # third-party-api
 
-Simple Day Calendar
+# Simple Day Calendar
 
 A daily planner developed using JavaScript, BootStrap (CSS) and Jquery
 
@@ -11,7 +11,7 @@ One requirement was to use [Moment.js](https://momentjs.com/) or an alternative 
 The user is able to enter events in the input col and save those events in local storage. 
 
 
-Lanquages / Technoligies:
+# Lanquages / Technoligies:
 
 -HTML
 -CSS
