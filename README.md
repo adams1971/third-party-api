@@ -18,3 +18,7 @@ The user is able to enter events in the input col and save those events in local
 -JavaScript
 -Moment.js
 -Bootstrap
+
+# Screen Shot
+
+<img src="s/Users/chefa/Documents/FSF_Homework/05-third-party-api/third-party-api/Screen Shot 2021-01-31 at 2.47.11 PM.png" alt="screen shot of site">
